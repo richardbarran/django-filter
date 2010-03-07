@@ -44,11 +44,12 @@ class LinkWidget(forms.Widget):
         return u'\n'.join(output)
 
     def render_option(self, name, selected_choices, option_value, option_label):
-        option_value = force_unicode(option_value)
+        data = self.data.copy()
+        if option_value is not None:
+            option_value = force_unicode(option_value)
+            data[name] = option_value
         if option_label == BLANK_CHOICE_DASH[0][1]:
             option_label = _("All")
-        data = self.data.copy()
-        data[name] = option_value
         selected = data == self.data or option_value in selected_choices
         try:
             url = data.urlencode()

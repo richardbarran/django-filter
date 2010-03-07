@@ -8,6 +8,12 @@ STATUS_CHOICES = (
     (1, 'Admin'),
 )
 
+STATUS_CHOICES_NONE = (
+    (None, 'All'),
+    (0, 'Regular'),
+    (1, 'Admin'),
+)
+
 class User(models.Model):
     username = models.CharField(max_length=255)
     first_name = models.CharField(max_length=100)
