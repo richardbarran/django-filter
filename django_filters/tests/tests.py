@@ -561,4 +561,11 @@ TypeError: Meta.fields contains a field that isn't defined on this FilterSet
 <li><a href="?status=0">Regular</a></li>
 <li><a href="?status=1">Admin</a></li>
 </ul></td></tr>
+>>> f = F({'status':'0'})
+>>> print f.form
+<tr><th><label for="id_status">Status:</label></th><td><ul id="id_status">
+<li><a href="?">All</a></li>
+<li><a class="selected" href="?status=0">Regular</a></li>
+<li><a href="?status=1">Admin</a></li>
+</ul></td></tr>
 """

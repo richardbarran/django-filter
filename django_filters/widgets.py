@@ -48,6 +48,9 @@ class LinkWidget(forms.Widget):
         if option_value is not None:
             option_value = force_unicode(option_value)
             data[name] = option_value
+        else:
+            if data.get(name, None) is not None:
+                del data[name]
         if option_label == BLANK_CHOICE_DASH[0][1]:
             option_label = _("All")
         selected = data == self.data or option_value in selected_choices
