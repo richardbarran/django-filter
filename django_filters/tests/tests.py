@@ -152,7 +152,7 @@ filter_tests = """
 >>> import django_filters
 >>> from django_filters import FilterSet
 >>> from django_filters.widgets import LinkWidget
->>> from django_filters.tests.models import User, Comment, Book, STATUS_CHOICES
+>>> from django_filters.tests.models import User, Comment, Book, STATUS_CHOICES, STATUS_CHOICES_NONE
 
 >>> call_command('loaddata', 'test_data', verbosity=0)
 
@@ -548,4 +548,24 @@ TypeError: Meta.fields contains a field that isn't defined on this FilterSet
 >>> f = F({'price_0': '15'})
 >>> f.qs
 [<Book: Rainbox Six>]
+
+>>> class F(FilterSet):
+...     status = django_filters.ChoiceFilter(widget=LinkWidget, choices=STATUS_CHOICES_NONE)
+...     class Meta:
+...         model = User
+...         fields = ['status']
+>>> f = F()
+>>> print f.form
+<tr><th><label for="id_status">Status:</label></th><td><ul id="id_status">
+<li><a class="selected" href="?">All</a></li>
+<li><a href="?status=0">Regular</a></li>
+<li><a href="?status=1">Admin</a></li>
+</ul></td></tr>
+>>> f = F({'status':'0'})
+>>> print f.form
+<tr><th><label for="id_status">Status:</label></th><td><ul id="id_status">
+<li><a href="?">All</a></li>
+<li><a class="selected" href="?status=0">Regular</a></li>
+<li><a href="?status=1">Admin</a></li>
+</ul></td></tr>
 """
