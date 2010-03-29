@@ -16,3 +16,4 @@ Contents:
     ref/filters
     ref/widgets
     tests
+    integration

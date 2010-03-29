@@ -118,37 +118,6 @@ provide either a ``model`` or ``filter_class`` argument, similar to the
 You must provide a template at ``<app>/<model>_filter.html`` which gets the
 context parameter ``filter``.
 
-Django-pagination
-=================
-
-To use django-filter alongside django-pagination requires only a little more work.
-The template code shown above needs to be changed to::
-
-	{% block content %}
-	    <form action="" method="get">
-	        {{ f.form.as_p }}
-	        <input type="submit" />
-	    </form>
-	
-	    {% autopaginate f.qs 40 as filter_list %}
-	
-	    {% for obj in filter_list %}
-	        {{ obj.name }} - ${{ obj.price }}<br />
-	    {% endfor %}
-	
-	    {% paginate %}
-	{% endblock %}
-
-Also, if you have - for example - selected page 5 of results, and then try to apply a filter,
-you will be sent to page 5 of the filtered results. To avoid this, don't add django-pagination's
-'page' parameter to the FilterSet. For example, based on the view code shown above::
-
-	def product_list(request):
-	    g = request.GET.copy()
-	    if 'page' in g:
-	        del g['page']
-	    f = ProductFilter(g, queryset=Product.objects.all())
-	    return render_to_response('my_app/template.html', {'filter': f})
 	
 	
 	
